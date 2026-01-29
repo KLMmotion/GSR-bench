@@ -1,0 +1,95 @@
+{
+  "doc_id": "doc_0002",
+  "document_name": "Desktop Organization and Table Cleaning Operations",
+
+  "summary": [
+    "GOAL: Organize desktop with boxes and cubes by conducting deep investigation and planning.",
+    "CORE OPERATION: Use `ValidateAndExecuteAction` for all physical moves.",
+    "PLANNING: Break down complex tasks into atomic steps.",
+    "KEY CONSTRAINTS: Respect container capacity (5 items) and accessibility. Maximize container use for table clearing.",
+    "STRATEGY ADAPTATION: Adapt plans if containers are blocked or color-matching is not possible."
+  ],
+  "organization_strategies": {
+    "complete_table_clearing": {
+      "goal": "Clear the table by storing all objects in containers.",
+      "approach": "Maximize container utilization, then stack boxes to minimize footprint."
+    },
+    "organized_by_type": {
+      "goal": "Group similar objects (cubes, mugs, boxes) together.",
+      "approach": "Store cubes/mugs in boxes, then arrange boxes systematically."
+    },
+    "color_coordinated": {
+      "goal": "Organize by color, matching objects to same-color boxes.",
+      "approach": "**CRITICAL PRIORITY:** Prioritize matching colors above all other organization strategies. If a color has no matching box, do not attempt to store those items in a different colored box unless a `complete_table_clearing` task is explicitly specified. For unmatched colors, group items by color on the table."
+    },
+    "maximum_storage": {
+      "goal": "Maximize container storage efficiency.",
+      "approach": "Fill boxes to capacity (up to 5 items) before placing anything on the table. **NOTE: This must not override the `color_coordinated` approach.**"
+    }
+  },
+  "core_rules": {
+    "color_coordination": {
+      "rule": "**ULTIMATE MANDATE:** Group objects of the same color. This rule has the highest priority over all other organization strategies. This applies to both numbered objects (e.g., `red_cube1`, `red_cube2`) and mixed types (e.g., `red_cube1` and `red_mug1`). **Unless there is an explicit instruction (e.g., `move red_cube in blue_box`), DO NOT place objects of different colors into the same-colored box.**",
+      "action": "First, place items in same-color boxes if available. If no matching box exists for a specific color, do not take action on those items unless a `complete_table_clearing` task is explicitly specified."
+    },
+    "obstacle_handling": {
+      "rule": "CRITICAL: A container is blocked if an object is on top of it. Scan scene graph for `object(on)container` relationships.",
+      "action": "Clear all blocking objects systematically from top to bottom before attempting any container access."
+    },
+    "capacity_management": {
+      "rule": "A box can hold a maximum of 5 items.",
+      "action": "Distribute items across multiple containers to balance load and maximize storage. If a box is full, place excess items on the table and proceed with other tasks."
+    },
+    "planning_efficiency": {
+      "rule": "PRIORITY: Select the planning path that minimizes execution time.",
+      "action": "Evaluate alternative action sequences and choose the most time-efficient option to achieve the goal."
+    },
+    "relocation_efficiency": {
+      "rule": "CRITICAL: When an object is in an incorrect container, but its intended target container is unblocked, move the object DIRECTLY to its final location. Do not use the table as an intermediate step.",
+      "action": "Analyze the scene graph to identify misplaced objects. For each misplaced object, check if its correct destination is unblocked. If so, plan a single move to its final destination."
+    }
+  },
+  "task_examples": {
+    "simple_clearing": {
+      "task": "Clean the table by organizing everything.",
+      "initial_state": "All cubes and boxes on table.",
+      "key_logic": "Move each cube into its corresponding color box.",
+      "final_state": "Cubes are in boxes; table is clear."
+    },
+    "blocked_container": {
+      "task": "Organize cubes when a box is blocked.",
+      "initial_state": "yellow_box is on red_box, red_cube is on yellow_box.",
+      "key_logic": "Clear red_cube first, then move yellow_box. Now red_box is accessible. Then organize."
+    },
+    "capacity_constrained": {
+      "task": "Organize when one box is full.",
+      "initial_state": "blue_box is at capacity (5 cubes) and an `extra_cube` is on the table.",
+      "key_logic": "Redistribute cubes from the full box to empty boxes (e.g., to red_box and yellow_box) or place the `extra_cube` in an available box. If no box is available and the current box is full, place the `extra_cube` on the table and continue."
+    },
+    "color_mismatch": {
+      "task": "Organize when some cube colors have no matching box.",
+      "initial_state": "red_cube1, red_cube2, and blue_cube1, blue_cube2 are on table. Only red_box and yellow_box exist.",
+      "key_logic": "Move red_cubes into red_box. **Stop there, as there is no matching box for the blue cubes.**"
+    },
+    "mixed_object_organization": {
+      "task": "Organize both cubes and mugs by color.",
+      "initial_state": "red_cube1 and red_mug1 are on the table, with a red_box available.",
+      "key_logic": "Both the red cube and red mug should be placed together in the red_box."
+    },
+    "misplaced_object": {
+      "task": "Correct an object in an incorrect container.",
+      "initial_state": "yellow_cube1 is in blue_box. yellow_box is on table and unblocked.",
+      "key_logic": "Move yellow_cube1 directly into yellow_box in a single step to correct the placement. Do not use the table as an intermediate stop."
+    }
+  },
+  "success_metrics": [
+    "Table cleanliness (minimal objects on surface)",
+    "Storage efficiency (high container utilization)",
+    "Object accessibility (no objects are blocked)",
+    "Visual organization (logical grouping and arrangement)",
+    "Planning speed (efficient path selection)"
+  ],
+  "task_completion_and_dynamic_verification": {
+    "rule": "MANDATORY: After each action or observation, the agent MUST re-evaluate the overall task goal and its progress against the *current scene graph*. The task is only considered complete when the scene graph *accurately reflects the desired final state* as defined by the user's goal and organization strategies. **Before concluding the task, the agent MUST perform a Final Verification Check: iterate through ALL items and verify that each item's color and location in the scene graph matches its intended final location and relationship.** If any item does not meet its final state, the agent must continue the plan. Do not assume successful execution of a planned action until the scene graph confirms it. If the scene state deviates from expectations (e.g., due to external interference, failed action execution, or unexpected changes), the agent must adapt its plan and continue working towards the overall goal using the updated scene information."
+  }
+}

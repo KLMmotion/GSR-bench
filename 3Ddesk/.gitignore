@@ -1,0 +1,3 @@
+logs/*
+*.pid
+/modular_project/libero_assest/*
