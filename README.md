@@ -67,3 +67,15 @@ Generate detailed statistics on success rates and sub-goal progress (4-way class
 cd report_analysis
 python analyze_success_rate.py
 ```
+
+## 📄 Citation
+
+If you find this work useful, please consider citing:
+
+```bibtex
+@article{hu2026gsr,
+  title={GSR: Learning Structured Reasoning for Embodied Manipulation},
+  author={Hu, Kewei and Zhang, Michael and Ying, Wei and Liu, Tianhao and Hao, Guoqiang and Li, Zimeng and Yu, Wanchan and Jing, Jiajian and Chen, Fangwen and Kang, Hanwen},
+  journal={arXiv preprint arXiv:2602.01693},
+  year={2026}
+}
