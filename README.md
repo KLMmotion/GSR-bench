@@ -1,3 +1,18 @@
+
+<h1 align="center">GSRbench: A benchmark for Grounded Scene-graph Reasoning</h1>
+
+<p align="center">
+  <a href="https://arxiv.org/pdf/2602.01693"><img src="https://img.shields.io/static/v1?label=Paper&message=PDF&color=red&logo=arxiv"></a>
+  <a href="https://klmmotion.github.io/gsr.github.io/"><img src="https://img.shields.io/badge/Project-Website-blue"></a>
+<span style="display:inline-block;opacity:0.4;cursor:default;">
+  <img src="https://img.shields.io/static/v1?label=%F0%9F%A4%97%20Model&message=HuggingFace&color=yellow">
+</span>
+<span style="display:inline-block;opacity:0.4;cursor:default;">
+  <img src="https://img.shields.io/static/v1?label=%F0%9F%A4%96%20Model&message=ModelScope&color=purple">
+</span>
+  <!-- <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache--2.0-green"></a> -->
+</p>
+
 # Benchmark & Agent 
 
 This project combines a 3D simulation benchmark, a LangGraph-based ROS2 agent, and analysis tools.
